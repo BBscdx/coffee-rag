@@ -114,7 +114,7 @@ for i, item in enumerate(CHECKS, 1):
         elif m in kb_all_text:
             classified.append(f'{m}:库里有,检索没捞到')
         else:
-            classified.append(f'{m}:库中无此数(计算值或检查点笔误)')
+            classified.append(f'{m}:库中无此数(计算值或模型未写,人工复核)')
     note = '; '.join(classified)
 
     suspicious = [c for n in scan_numbers(answer, q, must, any_)
@@ -130,7 +130,9 @@ for i, item in enumerate(CHECKS, 1):
     print(verdict)
 
 # ---------- 3. 汇总 ----------
-out = 'D:/coffee-rag/eval/report_baseline.csv'
+# 输出文件名由参数决定：python run_eval.py v2 -> report_v2.csv（默认 baseline）
+tag = sys.argv[1] if len(sys.argv) > 1 else 'baseline'
+out = f'D:/coffee-rag/eval/report_{tag}.csv'
 with open(out, 'w', newline='', encoding='utf-8-sig') as f:
     w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
     w.writeheader()
