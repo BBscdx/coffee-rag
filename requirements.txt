@@ -1,0 +1,4 @@
+jieba
+openai
+python-dotenv
+streamlit

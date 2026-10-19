@@ -31,16 +31,45 @@
 
 **问**：2023 年云南省咖啡种植面积多少？
 
-**答**：2023 年云南省咖啡种植面积为 114.6 万亩，产量 14.6 万吨，均占全国的 98% 以上。该口径为云南省农业农村厅答复中引用的 “统计数据”（2023 年自然年）[资料2]。需注意：该数据与 2024 年报告口径（119.31 万亩、15.02 万吨）分属不同年份，不可混用[资料1]。
+**答**：2023 年云南省咖啡种植面积为 114.6 万亩，产量 14.6 万吨，均占全国的 98% 以上。该口径为云南省农业农村厅答复中引用的“统计数据”（2023 年自然年）[资料2]。需注意：该数据与 2024 年报告口径（119.31 万亩、15.02 万吨）分属不同年份，不可混用[资料1]。
 
 一个回答同时展示三件事：数字可溯源、口径差异主动说明、来源可核对。更多问答与失败案例分析见 [docs/评测报告.md](docs/评测报告.md)。
+
+## 快速开始
+
+1. 克隆仓库并安装依赖：
+
+   ```bash
+   git clone https://github.com/BBscdx/coffee-rag.git
+   cd coffee-rag
+   pip install -r requirements.txt
+   ```
+
+2. 在项目根目录新建 `.env` 文件，填入 DeepSeek API Key：
+
+   ```text
+   DEEPSEEK_API_KEY=sk-你的密钥
+   ```
+
+   `.env` 已被 .gitignore 排除，不会上传到 GitHub。
+
+3. 启动问答界面：
+
+   ```bash
+   streamlit run app.py
+   ```
+
+   浏览器自动打开本地页面；每个回答都带检索留痕与 [资料 N] 来源标注。
 
 ## 项目结构
 
 ```
 coffee-rag/
+├── app.py              # Streamlit 问答界面（本地运行入口）
+├── rag.py              # 核心模块：切块 → TF-IDF 检索 → DeepSeek 问答
+├── requirements.txt    # 依赖清单
 ├── knowledge_base/     # 11 篇咖啡产业资料，每篇标注来源与日期
-├── notebooks/          # 系统本体：切块 → 检索 → 问答（Jupyter notebook）
+├── notebooks/          # 开发记录：切块 → 检索 → 问答（迭代草稿）
 ├── eval/
 │   ├── checks.py           # 18 题评测标准（must/any 检查点）
 │   ├── run_eval.py         # 跑批脚本：判定 + 检索覆盖 + 幻觉扫描
@@ -65,7 +94,8 @@ coffee-rag/
 
 ## 技术栈
 
-Python 3 · Jupyter Notebook · jieba（分词）· 手写 TF-IDF + 余弦相似度（检索）· DeepSeek API（生成，OpenAI 兼容接口）· python-dotenv
+Python 3 · Streamlit（界面）· Jupyter Notebook（开发记录）· jieba（分词）· 手写 TF-IDF + 余弦相似度（检索）· DeepSeek API（生成，OpenAI 兼容接口）· python-dotenv
+
 
 ## 协作方式
 
